@@ -119,7 +119,35 @@
      循环引用 retain cycle
      */
 //    这里讲的是block的循环引用问题，因为block在拷贝到堆上的时候，会retain其引用的外部变量，那么如果block中如果引用了他的宿主对象，那很有可能引起循环引用
+    // 会循环引用
+    self.myBlock = ^{
+        [self doSomething];
+    };
+    
+    //会循环引用
+    __block ViewController *weakSelf = self;
+    self.myBlock = ^{
+        [weakSelf doSomething];
+    };
+    
+    //不会循环引用
+    __weak ViewController *weakSelf1 = self;
+    self.myBlock = ^{
+        [weakSelf1 doSomething];
+    };
+    
+    //不会循环引用
+    __unsafe_unretained ViewController *weakSelf2 = self;
+    self.myBlock = ^{
+        [weakSelf2 doSomething];
+    };
+    
+    NSLog(@"myblock is %@", self.myBlock);
 //    经过上面的测试发现，在加了__weak和__unsafe_unretained的变量引入后，TestCycleRetain方法可以正常执行dealloc方法，而不转换和用__block转换的变量都会引起循环引用。
+}
+
+- (void)doSomething {
+    NSLog(@"do Something");
 }
 
 - (void)didReceiveMemoryWarning {

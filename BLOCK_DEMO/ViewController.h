@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-//typedef void (^Myblock)(UIButton *button);
+typedef void (^Myblock)(void);
 
 @interface ViewController : UIViewController
 
+@property (nonatomic,copy)Myblock myBlock;
 
 @end
 

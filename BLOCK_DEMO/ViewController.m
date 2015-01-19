@@ -79,7 +79,7 @@
     /*OBJC对象的测试*/
 //    由于ARC中没有reetain，retainCount的概念，只有强引用，弱引用的概念，当一个变量没有__Strong的指针指向它时，他就会被系统释放。
     // global全局变量
-    // 没被修饰的变量被block捕获时是获取的变量的值
+    // 没被修饰的变量被block捕获时是获取的变量的值,后续的改变不会影响到block里面的值
     UILabel *label = [[UILabel alloc] init];
     void (^TestBlock1)(void) = ^{
         NSLog(@"global OBJC %@",label);
